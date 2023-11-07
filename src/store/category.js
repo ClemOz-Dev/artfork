@@ -1,16 +1,12 @@
-import CategoryApiService from "../services/api/CategoryApiService.js"
+import CategoryApiService from "../services/api/CategoryApiService"
 
 const state = () => ({
   categories: [],
-  category: null,
 })
 
 const mutations = {
   SET_CATEGORIES(state, categories) {
     state.categories = categories
-  },
-  SET_CATEGORY(state, category) {
-    state.category = category
   },
 }
 
@@ -21,9 +17,14 @@ const actions = {
   },
 }
 
+const getters = {
+  categories: (state) => state.categories,
+}
+
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters,
 }

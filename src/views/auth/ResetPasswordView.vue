@@ -10,14 +10,14 @@
       :validation-schema="schema"
     >
       <div class="space-y-4">
-        <InputVue
+        <BaseInput
           label="Mot de passe *"
           type="password"
           name="password"
           placeholder="Entrez votre mot de passe"
           v-model="schema.password"
         />
-        <InputVue
+        <BaseInput
           label="Confirmer mot de passe"
           type="password"
           name="passwordConfirmation"
@@ -36,8 +36,8 @@
 <script>
 import { Form } from "vee-validate"
 import * as yup from "yup"
-import AuthApiService from "../../services/api/AuthApiService.js"
-import InputVue from "../../components/form/input.vue"
+import AuthApiService from "../../services/api/AuthApiService"
+import BaseInput from "../../components/form/BaseInput.vue"
 
 export default {
   name: "TheResetPasswordPage",
@@ -62,7 +62,7 @@ export default {
     }
   },
   // eslint-disable-next-line vue/no-reserved-component-names
-  components: { Form, InputVue },
+  components: { BaseInput, Form },
   isLoading: false,
   methods: {
     async preparePayload(values) {

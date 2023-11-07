@@ -1,7 +1,7 @@
-import axiosInstance from "../axios.js"
-import AuthLocalService from "../AuthLocalService.js"
-import UserApiService from "./UserApiService.js"
-import store from "../../store/index.js"
+import axiosInstance from "../axios"
+import AuthLocalService from "../AuthLocalService"
+import UserApiService from "./UserApiService"
+import store from "../../store/index"
 
 class AuthApiService {
   /**
@@ -34,7 +34,7 @@ class AuthApiService {
         await AuthLocalService.setJwt(response.data.token)
       })
       .catch((error) => {
-        throw error.data
+        throw error
       })
   }
 

@@ -1,5 +1,5 @@
-import AuthApiService from "../services/api/AuthApiService.js"
-import AuthLocalService from "../services/AuthLocalService.js"
+import AuthApiService from "../services/api/AuthApiService"
+import AuthLocalService from "../services/AuthLocalService"
 
 const state = () => ({
   isConnected: false,

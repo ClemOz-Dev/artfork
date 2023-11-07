@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'Manrope';
-    src: url('/assets/fonts/Manrope-Regular.ttf') format('truetype');
+    src: url('./assets/fonts/Manrope-Regular.ttf') format('truetype');
 }
 
 body {

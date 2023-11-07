@@ -1,6 +1,5 @@
-import axios from "src/services/axios.js"
-import AuthLocalService from "./AuthLocalService.js"
-import router from "../router/index.js"
+import axios from "axios"
+import AuthLocalService from "./AuthLocalService"
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
@@ -27,11 +26,11 @@ axiosInstance.interceptors.response.use(
       }
       if (status === 500) {
         // await router.push("/internal-server-error")
-         return Promise.reject(error.response)
-      } else {
         return Promise.reject(error.response)
       }
-    } else if (error.request) {
+      return Promise.reject(error.response)
+    }
+    if (error.request) {
       console.error(
         "La requête n'a pas abouti. Vérifiez votre connexion Internet ou réessayez plus tard.",
       )

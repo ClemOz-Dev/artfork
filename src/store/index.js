@@ -1,10 +1,10 @@
 import { createStore } from "vuex"
-import artistStore from "./artist.js"
-import artworkStore from "./artwork.js"
-import authStore from "./auth.js"
-import categoryStore from "./category.js"
-import exhibitionStore from "./exhibition.js"
-import userStore from "./user.js"
+import artistStore from "./artist"
+import artworkStore from "./artwork"
+import authStore from "./auth"
+import categoryStore from "./category"
+import exhibitionStore from "./exhibition"
+import userStore from "./user"
 
 const store = createStore({
   modules: {

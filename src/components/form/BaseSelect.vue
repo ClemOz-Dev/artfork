@@ -6,26 +6,29 @@
       as="select"
       :class="{
         'w-80 p-2 border rounded-lg bg-white': isActive,
+        'on-error': isOnError,
       }"
+      @change="onSelectChange"
     >
       <option value="">{{ defaultValue }}</option>
       <option v-for="option in options" :key="option.id" :value="option.id">
         {{ option.label || option.name || formatFullAddress(option) }}
       </option>
     </Field>
-    <ErrorMessage :name="name" class="text-red-500 text-sm w-80" />
+    <div class="error-message" v-if="isOnError">
+      {{ errors[name] }}
+    </div>
   </div>
 </template>
 <script>
-import { Field, ErrorMessage } from "vee-validate"
-import AddressMixin from "../../mixins/AddressMixin.js"
+import { Field } from "vee-validate"
+import AddressMixin from "../../mixins/AddressMixin"
 
 export default {
   components: {
     Field,
-    ErrorMessage,
   },
-  name: "SelectVue",
+  name: "BaseSelect",
   mixins: [AddressMixin],
   props: {
     name: {
@@ -44,11 +47,39 @@ export default {
       type: String,
       required: true,
     },
+    errors: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       isActive: true,
     }
   },
+  computed: {
+    isOnError() {
+      return this.errors === undefined
+        ? false
+        : this.errors[this.name] !== undefined
+    },
+  },
+  methods: {
+    onSelectChange(event) {
+      const selectedCategoryId = event.target.value
+      this.$emit("category-selected", selectedCategoryId)
+    },
+  },
 }
 </script>
+<style lang="scss" scoped>
+.error-message {
+  color: #ef4444;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.on-error {
+  border-color: #ef4444;
+}
+</style>

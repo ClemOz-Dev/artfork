@@ -16,8 +16,6 @@ import ResetPasswordView from "../views/auth/ResetPasswordView.vue"
 import ProfileView from "../views/profile/ProfileView.vue"
 import ContactView from "../views/ContactView.vue"
 import CGVView from "../views/CGVView.vue"
-import NotFound from "../views/errors/NotFound.vue"
-import InternalServer from "../views/errors/InternalServer.vue"
 
 const routes = [
   {
@@ -101,17 +99,6 @@ const routes = [
     path: "/cgv",
     name: "cgv",
     component: CGVView,
-  },
-
-  {
-    path: "/internal-server-error",
-    name: "internal-server-error",
-    component: InternalServer,
-  },
-  {
-    path: "/:catchAll(.*)",
-    name: "not-found",
-    component: NotFound,
   },
 ]
 

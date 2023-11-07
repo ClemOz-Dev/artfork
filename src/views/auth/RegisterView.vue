@@ -1,37 +1,43 @@
 <template>
   <div class="flex flex-col items-center text-black h-full">
     <h1 class="font-bold text-4xl mt-12 mb-6">S'inscrire</h1>
-    <Form
-      action="#"
+    <form
       class="flex flex-col h-full items-center space-y-10"
-      @submit="onSubmit"
-      :validation-schema="schema"
+      @submit.prevent="onSubmit"
     >
       <div class="sm:flex space-x-4">
         <div class="space-y-4">
-          <InputVue
-            label="Email *"
+          <BaseInput
+            :value="email"
+            label="Email"
             type="email"
             name="email"
+            :is-mandatory="true"
             placeholder="Entrez votre email"
-            v-model="schema.email"
+            :error="errors"
+            @input-changed="inputChange('email', $event)"
           />
-          <InputVue
-            label="Prénom *"
+          <BaseInput
+            :value="firstName"
+            label="Prénom"
             type="text"
             name="firstName"
-            placeholder="Entrez votre prénim"
-            v-model="schema.firstName"
+            :is-mandatory="true"
+            placeholder="Entrez votre prénom"
+            @input-changed="inputChange('firstName', $event)"
           />
-          <InputVue
-            label="Nom *"
+          <BaseInput
+            :value="lastName"
+            label="Nom"
             type="text"
             name="lastName"
+            :is-mandatory="true"
             placeholder="Entrez votre nom"
-            v-model="schema.lastName"
+            :error="errors"
+            @input-changed="inputChange('lastName', $event)"
           />
           <div>
-            <span class="font-bold">Sélectionnez votre rôle *</span>
+            <span class="font-bold">Sélectionnez votre rôle</span>
             <div class="flex items-center gap-2 ml-2 mt-2">
               <Field
                 id="3"
@@ -68,19 +74,25 @@
           </div>
         </div>
         <div class="space-y-4">
-          <InputVue
-            label="Mot de passe *"
+          <BaseInput
+            :value="password"
+            label="Mot de passe"
             type="password"
             name="password"
+            :is-mandatory="true"
             placeholder="Entrez votre mot de passe"
-            v-model="schema.password"
+            :error="errors"
+            @input-changed="inputChange('password', $event)"
           />
-          <InputVue
+          <BaseInput
+            :value="passwordConfirm"
             label="Confirmer mot de passe"
             type="password"
-            name="passwordConfirmation"
-            v-model="schema.passwordConfirmation"
+            name="passwordConfirm"
+            :is-mandatory="true"
             placeholder="Confirmez votre mot de passe"
+            :error="errors"
+            @input-changed="inputChange('passwordConfirm', $event)"
           />
         </div>
       </div>
@@ -107,84 +119,70 @@
           </button>
         </router-link>
       </div>
-    </Form>
+    </form>
   </div>
 </template>
 
 <script>
-import * as yup from "yup"
-import { Field, Form } from "vee-validate"
+import { Field } from "vee-validate"
 import { toast } from "vue3-toastify"
 import SpinningLoader from "../../components/UI/SpinningLoader.vue"
-import InputVue from "../../components/form/input.vue"
 import ReCaptchaV2 from "../../components/form/reCaptchaV2.vue"
+import BaseInput from "../../components/form/BaseInput.vue"
 
 export default {
   name: "TheRegisterPage",
+  components: { BaseInput, ReCaptchaV2, SpinningLoader, Field },
   data() {
     return {
-      schema: yup.object({
-        email: yup.string().email().required("Veuillez fournir un email."),
-        firstName: yup
-          .string()
-          .transform((value) =>
-            typeof value === "string" ? value.trim() : value,
-          )
-          .min(2, "Minimum 2 caractères")
-          .required("Veuillez fournir un prénom."),
-        lastName: yup
-          .string()
-          .transform((value) =>
-            typeof value === "string" ? value.trim() : value,
-          )
-          .min(2, "Minimum 2 caractères")
-          .required("Veuillez fournir un nom."),
-        password: yup
-          .string()
-          .required("Veuillez fournir un mot de passe.")
-          .matches(
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
-            "Doit contenir 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
-          ),
-        passwordConfirmation: yup
-          .string()
-          .required("Merci de confirmer votre mot de passe.")
-          .oneOf(
-            [yup.ref("password")],
-            "Les mots de passe ne correspondent pas",
-          ),
-      }),
+      email: "",
+      firstName: "",
+      lastName: "",
+      password: "",
+      passwordConfirm: "",
       recaptcha: null,
       selectedRole: "1",
       isLoading: false,
+      errors: {},
     }
   },
-  // eslint-disable-next-line vue/no-reserved-component-names
-  components: { ReCaptchaV2, Form, InputVue, Field, SpinningLoader },
   methods: {
+    inputChange(name, value) {
+      this[name] = value
+    },
     handleRecaptcha(value) {
       this.recaptcha = value
     },
-    async preparePayload(values) {
+    async preparePayload() {
       return {
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        password: values.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        password: this.password,
         roleId: this.selectedRole,
         recaptcha: this.recaptcha,
       }
     },
-    async onSubmit(values) {
-      const payload = await this.preparePayload(values)
+    async onSubmit() {
+      if (this.password !== this.passwordConfirm) {
+        this.errors = {
+          passwordConfirm: "Doit correspondre au mot de passe",
+        }
+        return
+      }
+      const payload = await this.preparePayload(this)
       try {
         this.isLoading = true
         await this.$store.dispatch("authStore/register", payload)
         this.$router.push({ name: "home" })
       } catch (e) {
-        toast.error(e.error, {
-          autoClose: 1000,
-        })
+        if (e.status === 422) {
+          this.errors = e.data
+        } else {
+          toast.error(e.data.error, {
+            autoClose: 1000,
+          })
+        }
       }
       this.isLoading = false
     },

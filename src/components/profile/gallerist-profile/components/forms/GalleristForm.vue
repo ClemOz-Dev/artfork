@@ -2,15 +2,15 @@
   <section class="add-gallery">
     <h3>Ajouter une gallerie</h3>
     <Form class="add-gallery-form" @submit="saveGallery" ref="form">
-      <InputVue
+      <BaseInput
         label="Description"
         type="text"
         name="description"
         placeholder=""
       />
-      <InputVue label="Image" type="text" name="image" placeholder="" />
-      <InputVue label="Voie" type="text" name="road" placeholder="" />
-      <InputVue
+      <BaseInput label="Image" type="text" name="image" placeholder="" />
+      <BaseInput label="Voie" type="text" name="road" placeholder="" />
+      <BaseInput
         label="Code postal"
         type="text"
         name="zipcode"
@@ -26,7 +26,7 @@
         label="Ville"
         :is-disabled="true"
       />
-      <InputVue label="Pays" type="text" name="country" />
+      <BaseInput label="Pays" type="text" name="country" />
       <button type="submit">Enregistrer une galerie</button>
     </Form>
   </section>
@@ -35,15 +35,14 @@
 <script>
 import * as yup from "yup"
 import { Form } from "vee-validate"
-import InputVue from "../../../../form/input.vue"
 import BaseInput from "../../../../form/BaseInput.vue"
 import LocalitiesList from "../../../../form/LocalitiesList.vue"
-import GalleryApiService from "../../../../../services/api/GalleryApiService.js"
-import LocalisationService from "../../../../../services/business/Localisation.js"
+import GalleryApiService from "../../../../../services/api/GalleryApiService"
+import LocalisationService from "../../../../../services/business/Localisation"
 
 export default {
   // eslint-disable-next-line vue/no-reserved-component-names
-  components: { InputVue, LocalitiesList, BaseInput, Form },
+  components: { LocalitiesList, BaseInput, Form },
   data() {
     return {
       schema: yup.object({

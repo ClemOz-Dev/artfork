@@ -1,15 +1,14 @@
-
 const state = {
-  me: null,
+  current_user: null,
   galleries: [],
 }
 
 const mutations = {
   SET_ME(state, user) {
-    state.me = user
+    state.current_user = user
   },
   RESET_ME(state) {
-    state.me = null
+    state.current_user = null
   },
   SET_MY_GALLERIES(state, galleries) {
     console.log(galleries)
@@ -27,7 +26,7 @@ const actions = {
 }
 
 const getters = {
-  getMe: (state) => state.me,
+  currentUser: (state) => state.current_user,
   myGalleries: (state) => state.galleries,
 }
 

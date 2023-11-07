@@ -53,10 +53,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("userStore", ["getMe"]),
+    ...mapGetters("userStore", ["currentUser"]),
     isOwn() {
-      if (this.getMe) {
-        return this.getMe.id === this.artwork.userId
+      if (this.currentUser) {
+        return this.currentUser.id === this.artwork.currentUser
       }
       return false
     },
@@ -92,4 +92,4 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss" src="ArtworkListCardItem.scss" />
+<style scoped lang="scss" src="./ArtworkListCardItem.scss" />

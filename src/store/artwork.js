@@ -1,8 +1,9 @@
-import ArtworkApiService from "../services/api/ArtworkApiService.js"
+import ArtworkApiService from "../services/api/ArtworkApiService"
 
 const state = () => ({
   artworks: [],
   artwork: null,
+  form_errors: {},
 })
 
 const mutations = {
@@ -14,6 +15,9 @@ const mutations = {
   },
   SET_ARTWORKS_WITH_ARTIST(state, artworks) {
     state.artworks = artworks
+  },
+  SET_FORM_ERRORS(state, errors) {
+    state.form_errors = errors
   },
 }
 
@@ -38,15 +42,22 @@ const actions = {
     commit("SET_ARTWORKS", artworks)
   },
 
-  async addArtwork({ dispatch }, artwork) {
-    await ArtworkApiService.createArtwork(artwork)
-    await dispatch("fetchArtWorks")
+  async addArtwork({ dispatch, commit }, payload) {
+    await ArtworkApiService.createArtwork(payload)
+      .then(() => dispatch("fetchArtWorks"))
+      .catch((errors) => {
+        commit("SET_FORM_ERRORS", errors)
+        throw Error("La création de l'oeuvre a échoué.")
+      })
   },
-
   async deleteArtworkById({ dispatch }, artworkId) {
     await ArtworkApiService.deleteArtwork(artworkId)
     await dispatch("fetchArtWorks")
   },
+}
+
+const getters = {
+  formErrors: (state) => state.form_errors,
 }
 
 export default {
@@ -54,4 +65,5 @@ export default {
   state,
   actions,
   mutations,
+  getters,
 }

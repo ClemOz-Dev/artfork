@@ -8,26 +8,19 @@
       class="flex flex-col md:flex-row"
     >
       <div>
-        <InputVue label="Nom" type="text" name="name" placeholder="" />
-        <InputVue
-          label="Description"
-          type="text"
-          name="description"
-          placeholder=""
-        />
-        <InputVue
+        <BaseInput label="Nom" type="text" name="name" placeholder="" />
+        <BaseInput label="Description" type="text" name="description" />
+        <BaseInput
           label="Date de début de l\'exposition"
           type="date"
           name="startDate"
-          placeholder=""
         />
-        <InputVue
+        <BaseInput
           label="Date de fin de l\'exposition"
           type="date"
           name="endDate"
-          placeholder=""
         />
-        <SelectVue
+        <BaseSelect
           default-value=""
           :options="myGalleries"
           name="gallery_id"
@@ -46,15 +39,15 @@
 import * as yup from "yup"
 import { Form } from "vee-validate"
 import { mapGetters } from "vuex"
-import InputVue from "../../../../form/input.vue"
 import MultiSelect from "../../../../form/MultiSelect.vue"
-import ExhibitionApiService from "../../../../../services/api/ExhibitionApiService.js"
-import ArtWorkApiService from "../../../../../services/api/ArtworkApiService.js"
-import SelectVue from "../../../../form/select.vue"
+import BaseInput from "../../../../form/BaseInput.vue"
+import ExhibitionApiService from "../../../../../services/api/ExhibitionApiService"
+import ArtWorkApiService from "../../../../../services/api/ArtworkApiService"
+import BaseSelect from "../../../../form/BaseSelect.vue"
 
 export default {
   // eslint-disable-next-line vue/no-reserved-component-names
-  components: { SelectVue, InputVue, Form, MultiSelect },
+  components: { BaseSelect, BaseInput, Form, MultiSelect },
   data() {
     return {
       schema: yup.object({
@@ -72,7 +65,7 @@ export default {
     await this.fetchArtworks()
   },
   computed: {
-    ...mapGetters("userStore", ["getMe", "myGalleries"]),
+    ...mapGetters("userStore", ["currentUser", "myGalleries"]),
   },
   methods: {
     async fetchArtworks() {
@@ -101,4 +94,45 @@ export default {
   },
 }
 </script>
-<style scoped lang="scss" src="../../GalleryProfile.scss" />
+<style scoped lang="scss">
+.add-gallery {
+  padding: 50px;
+}
+
+.add-gallery button {
+  background: #ef4444;
+  height: 40px;
+  color: white;
+  font-weight: 700;
+  width: 315px;
+  border-radius: 6.7px;
+  margin-top: 2rem;
+}
+
+.add-gallery-form {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/*Média-queries*/
+@media all and (max-width: 768px) {
+  .add-gallery {
+    padding: 0;
+    margin-top: 40px;
+  }
+
+  .add-gallery button {
+    width: 100%;
+  }
+
+  .add-gallery-form {
+    width: 100%;
+  }
+}
+</style>

@@ -63,12 +63,12 @@
 
 <script>
 import { mapGetters } from "vuex"
-import GalleryApiService from "../../../services/api/GalleryApiService.js"
+import GalleryApiService from "../../../services/api/GalleryApiService"
 import CustomCarousel from "../../UI/CustomCarousel.vue"
-import AddressMixin from "../../../mixins/AddressMixin.js"
+import AddressMixin from "../../../mixins/AddressMixin"
 import GalleryForm from "./components/forms/GalleristForm.vue"
 import ExhibitionForm from "./components/forms/ExhibitionForm.vue"
-import store from "../../../store/index.js"
+import store from "../../../store/index"
 
 export default {
   name: "GalleryProfile",
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters("userStore", ["getMe", "myGalleries"]),
+    ...mapGetters("userStore", ["currentUser", "myGalleries"]),
     displayedGalleries() {
       console.log("Galleries :", this.myGalleries)
       const startIndex = this.currentPage
@@ -112,4 +112,45 @@ export default {
   },
 }
 </script>
-<style lang="scss" src="GalleryProfile.scss" />
+<style lang="scss">
+.add-gallery {
+  padding: 50px;
+}
+
+.add-gallery button {
+  background: #ef4444;
+  height: 40px;
+  color: white;
+  font-weight: 700;
+  width: 315px;
+  border-radius: 6.7px;
+  margin-top: 2rem;
+}
+
+.add-gallery-form {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/*Média-queries*/
+@media all and (max-width: 768px) {
+  .add-gallery {
+    padding: 0;
+    margin-top: 40px;
+  }
+
+  .add-gallery button {
+    width: 100%;
+  }
+
+  .add-gallery-form {
+    width: 100%;
+  }
+}
+</style>

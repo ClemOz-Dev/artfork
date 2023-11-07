@@ -1,30 +1,34 @@
 <template>
   <div class="flex flex-col items-center text-black h-full">
     <h1 class="font-bold text-4xl my-14">Connexion</h1>
-    <Form
-      class="flex flex-col h-full items-center"
-      @submit="onSubmit"
-      :validation-schema="schema"
-    >
-      <InputVue
-        label="Email *"
+    <form class="flex flex-col h-full items-center" @submit.prevent="onSubmit">
+      <BaseInput
+        :value="email"
+        label="Email"
         type="email"
         name="email"
+        :is-mandatory="true"
         placeholder="Entrez votre email"
+        :errors="errors"
+        @input-changed="inputChange('email', $event)"
       />
-      <div>
-        <InputVue
-          label="Mot de passe *"
-          type="password"
-          name="password"
-          placeholder="Entrez votre mot de passe"
-        />
-        <router-link
-          :to="{ name: 'forgot-password' }"
-          class="text-sm text-blue-600 hover:underline text-left"
-          >Mot de passe oublié?
-        </router-link>
-      </div>
+
+      <BaseInput
+        :value="password"
+        label="Mot de passe"
+        type="password"
+        name="password"
+        :is-mandatory="true"
+        placeholder="Entrez votre mot de passe"
+        :errors="errors"
+        @input-changed="inputChange('password', $event)"
+      />
+      <router-link
+        :to="{ name: 'forgot-password' }"
+        class="text-sm text-blue-600 hover:underline text-left mt-4"
+        >Mot de passe oublié?
+      </router-link>
+
       <div class="mt-10 w-64">
         <SpinningLoader v-if="isLoading" />
         <button
@@ -44,41 +48,44 @@
           </button>
         </router-link>
       </div>
-    </Form>
+    </form>
   </div>
 </template>
 <script>
-import * as yup from "yup"
-import { Form } from "vee-validate"
 import { toast } from "vue3-toastify"
 import SpinningLoader from "../../components/UI/SpinningLoader.vue"
-import InputVue from "../../components/form/input.vue"
+import BaseInput from "../../components/form/BaseInput.vue"
 
 export default {
   name: "Connexion",
   data() {
     return {
-      schema: yup.object({
-        email: yup.string().email().required("Veuillez fournir un email."),
-        password: yup.string().required("Veuillez fournir un mot de passe."),
-      }),
+      email: "",
+      password: "",
       isLoading: false,
+      errors: {},
     }
   },
-  // eslint-disable-next-line vue/no-reserved-component-names
-  components: { InputVue, SpinningLoader, Form },
+  components: { BaseInput, SpinningLoader },
   methods: {
-    async onSubmit(values) {
+    async onSubmit() {
+      const { email, password } = this
       try {
         this.isLoading = true
-        await this.$store.dispatch("authStore/login", values)
+        this.errors = {}
+        await this.$store.dispatch("authStore/login", { email, password })
         this.$router.push({ name: "home" })
       } catch (e) {
-        toast.error(e.error, {
-          autoClose: 1000,
+        this.errors = { email: "", password: "" }
+        toast.error("La connexion a échoué", {
+          autoClose: 1500,
         })
       }
       this.isLoading = false
+    },
+    inputChange(name, value) {
+      this.errors = {}
+      this[name] = value
     },
   },
 }

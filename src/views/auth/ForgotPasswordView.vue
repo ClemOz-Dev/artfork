@@ -9,7 +9,7 @@
       :validation-schema="schema"
     >
       <div class="flex flex-col box-border">
-        <InputVue
+        <BaseInput
           label="Votre Email *"
           type="email"
           name="email"
@@ -36,8 +36,8 @@
 <script>
 import { Form } from "vee-validate"
 import * as yup from "yup"
-import InputVue from "../../components/form/input.vue"
-import AuthApiService from "../../services/api/AuthApiService.js"
+import AuthApiService from "../../services/api/AuthApiService"
+import BaseInput from "../../components/form/BaseInput.vue"
 
 export default {
   name: "TheForgotPasswordPage",
@@ -50,7 +50,7 @@ export default {
   },
   isLoading: false,
   // eslint-disable-next-line vue/no-reserved-component-names
-  components: { Form, InputVue },
+  components: { Form, BaseInput },
   methods: {
     async preparePayload(values) {
       return {
