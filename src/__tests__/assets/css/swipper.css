@@ -1,0 +1,33 @@
+.swiper {
+    padding-left: 90px;
+  }
+  
+  .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+  }
+  
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+  }
+  
+  .artworkSwiper .swiper-pagination-bullets {
+      bottom: 10% !important;
+  }
+  
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 32px ;
+    height: 32px ;
+    color: #000000;
+  }
+  .swiper-button-next svg ,  .swiper-button-prev svg{
+    width: 20%;
+    
+  }

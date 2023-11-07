@@ -1,0 +1,40 @@
+.add-artwork {
+  padding: 50px;
+}
+
+.add-artwork button {
+  background: #ef4444;
+  height: 40px;
+  color: white;
+  font-weight: 700;
+  width: 315px;
+  border-radius: 6.7px;
+  margin-top: 2rem;
+}
+
+.add-artwork-form {
+  width: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+h3 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/*Média-queries*/
+@media all and (max-width: 768px) {
+  .add-artwork {
+    padding: 0;
+    margin-top: 40px;
+  }
+
+  .add-artwork button {
+    width: 100%;
+  }
+
+  .add-artwork-form {
+    width: 100%;
+  }
+}

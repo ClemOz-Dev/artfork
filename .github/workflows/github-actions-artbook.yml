@@ -1,0 +1,50 @@
+name: Build and Test
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+      - "release"
+      - "develop"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        run: |
+          echo "Installing project dependencies..."
+          yarn install
+
+      - name: ESLint
+        run: |
+          echo "Linting the code..."
+          yarn lint
+
+      - name: Build Vite app
+        run: |
+          echo "Building Vite app..."
+          yarn vite build
+
+      - name: Archive dist directory
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: ./dist
+
+      - name: Run unit tests
+        run: |
+          echo "Running tests..."
+          yarn test
