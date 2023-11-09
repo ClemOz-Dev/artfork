@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-unresolved
-import ExhibitionApiService from "../services/api/ExhibitionApiService.js"
+import ExhibitionApiService from "../services/api/ExhibitionApiService"
 
 const state = () => ({
   exhibitions: [],
@@ -28,9 +28,14 @@ const actions = {
   },
 }
 
+const getters = {
+  exhibitions: (state) => state.exhibitions,
+}
+
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters
 }

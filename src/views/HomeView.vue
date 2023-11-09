@@ -5,7 +5,11 @@
     >
       Les Oeuvres
     </h2>
-    <ArtworkListCard :artworks="artworks" />
+    <SwipperCarousel :items="artworks">
+      <template v-slot="{ item }">
+        <ArtworkCard :artwork="item" />
+      </template>
+    </SwipperCarousel>
   </section>
   <section>
     <h2
@@ -13,7 +17,11 @@
     >
       Les Artistes
     </h2>
-    <ArtistListCardItemCaroussel />
+    <SwipperCarousel :items="artists" :displayed-count="5">
+      <template v-slot="{ item }">
+        <ArtistCard :artist="item" />
+      </template>
+    </SwipperCarousel>
   </section>
   <section>
     <h2
@@ -21,32 +29,55 @@
     >
       Les Expositions
     </h2>
-    <div class="mx-auto w-full max-w-screen-lg">
-      <ExhibitionsList
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
-      />
-    </div>
+    <SwipperCarousel :items="exhibitions">
+      <template v-slot="{ item }">
+        <ExhibitionCard :exhibition="item" />
+      </template>
+    </SwipperCarousel>
   </section>
 </template>
 <script>
-import ArtistListCardItemCaroussel from "../components/artist/list/ArtistListCardItemCaroussel.vue"
-import ArtworkListCard from "../components/artwork/list/ArtworkListCard.vue"
-import ExhibitionsList from "../components/exhibition/list/TheExhibitionsList.vue"
+import SwipperCarousel from "@/components/UI/SwipperCarousel.vue"
+import ArtistCard from "@/components/artist/list/ArtistListCardItem.vue"
+import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import { mapGetters } from "vuex"
+import ExhibitionCard from "@/components/exhibition/list/ExhibitionListCardItem.vue"
 
 export default {
   name: "HomeView",
-  components: { ArtworkListCard, ArtistListCardItemCaroussel, ExhibitionsList },
+  components: {
+    ExhibitionCard,
+    ArtworkCard,
+    ArtistCard,
+    SwipperCarousel,
+  },
   computed: {
+    ...mapGetters("artworkStore", ["artworks"]),
+    ...mapGetters("artistStore", ["artists"]),
+    ...mapGetters("exhibitionStore", ["exhibitions"]),
     artworks() {
       return this.$store.state.artworkStore.artworks
     },
   },
-  beforeMount() {
-    this.fetchArtWorksWithArtistName()
+  async beforeMount() {
+    await this.fetchArtWorksWithArtistName()
+    await this.fetchArtists()
+    await this.fetchExhibitions()
   },
   methods: {
     async fetchArtWorksWithArtistName() {
       this.$store.dispatch("artworkStore/fetchArtWorksWithArtistName")
+    },
+    async fetchArtists() {
+      const payload = {
+        offset: 0,
+        limit: 100,
+        artworks: false,
+      }
+      this.$store.dispatch("artistStore/fetchArtists", payload)
+    },
+    async fetchExhibitions() {
+      this.$store.dispatch("exhibitionStore/fetchExhibitions")
     },
   },
 }
