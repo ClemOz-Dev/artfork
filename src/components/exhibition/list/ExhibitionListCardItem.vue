@@ -51,10 +51,6 @@ export default {
       type: Object,
       required: true,
     },
-    isClickable: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {

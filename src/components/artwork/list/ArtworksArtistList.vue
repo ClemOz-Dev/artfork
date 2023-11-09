@@ -3,10 +3,14 @@
     <div v-for="artist in artists" :key="artist.id" class="mb-4">
       <!-- ArtistListCardItem (on the first row) -->
       <div class="flex items-start mb-4 ms-4">
-        <ArtistListCardItem :artist="artist" />
+        <ArtistListCard :artist="artist" />
       </div>
       <!-- ArtworkListCard (displayed below ArtistListCardItem) -->
-      <ArtworkListCard :artworks="artist.artworks" />
+      <SwipperCarousel :items="artist.artworks">
+        <template v-slot="{ item }">
+        <ArtworkCard :artwork="item" />
+      </template>
+      </SwipperCarousel>
     </div>
 
     <div ref="bottom" style="height: 1px"></div>
@@ -14,13 +18,17 @@
 </template>
 
 <script>
-import ArtistListCardItem from "../../artist/list/ArtistListCardItem.vue"
+import ArtistListCard from "../../artist/list/ArtistListCard.vue"
 import ArtworkListCard from "./ArtworkListCard.vue"
+import SwipperCarousel from "@/components/UI/SwipperCarousel.vue";
+import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue";
 
 export default {
   name: "TheArtWorkList",
   components: {
-    ArtistListCardItem,
+    ArtworkCard,
+    SwipperCarousel,
+    ArtistListCard,
     ArtworkListCard,
   },
   data() {

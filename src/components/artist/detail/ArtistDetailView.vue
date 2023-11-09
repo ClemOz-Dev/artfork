@@ -18,7 +18,7 @@
 <script>
 import ArtworksList from "@/components/artwork/list/ArtworkListCard.vue"
 import { mapGetters } from "vuex"
-import ArtistOverview from "@/components/artist/detail/ArtistOverview.vue"
+import ArtistOverview from "./ArtistOverview.vue"
 import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue";
 
 export default {

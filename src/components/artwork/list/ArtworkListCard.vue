@@ -27,8 +27,6 @@
     >
       <div @click="redirectToArtwork(artwork)">
         <ArtworkListCardItem
-          is-clickable
-          class="cursor-pointer"
           :artwork="artwork"
         />
       </div>

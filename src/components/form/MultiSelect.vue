@@ -47,21 +47,12 @@ export default {
     options: {
       type: Array,
       required: true,
-    },
-    isClickable: {
-      type: Boolean,
-      default: false,
-    },
+    }
   },
   data() {
     return {
       selectedValues: [],
     }
-  },
-  methods: {
-    parseToString(value) {
-      return value.map((v) => v.name).toString()
-    },
   },
 }
 </script>

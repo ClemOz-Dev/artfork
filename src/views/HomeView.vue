@@ -38,7 +38,7 @@
 </template>
 <script>
 import SwipperCarousel from "@/components/UI/SwipperCarousel.vue"
-import ArtistCard from "@/components/artist/list/ArtistListCardItem.vue"
+import ArtistCard from "@/components/artist/list/ArtistListCard.vue"
 import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
 import { mapGetters } from "vuex"
 import ExhibitionCard from "@/components/exhibition/list/ExhibitionListCardItem.vue"

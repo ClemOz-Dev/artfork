@@ -1,31 +1,25 @@
 <template>
-  <ArtistCard :artists="artists" />
+  <div class="flex flex-wrap -mx-4">
+    <div
+      v-for="(artist, index) in artists"
+      :key="index"
+      class="card w-full sm:w-1/3 lg:w-1/4 p-4 mb-6 shadow-base-200"
+    >
+      <ArtistListCard :artist="artist" />
+    </div>
+  </div>
 </template>
 
 <script>
-import ArtistCard from "./ArtistListCard.vue"
+import ArtistListCard from "./ArtistListCard.vue"
 
 export default {
-  components: { ArtistCard },
-  computed: {
-    artists() {
-      return this.$store.state.artistStore.artists
-    },
-  },
-  beforeMount() {
-    this.fetchArtists()
-  },
-  async beforeUnmount() {
-    await this.$store.dispatch("artistStore/resetArtists")
-  },
-  methods: {
-    async fetchArtists() {
-      const payload = {
-        offset: 0,
-        limit: 100,
-        artworks: false,
-      }
-      this.$store.dispatch("artistStore/fetchArtists", payload)
+  name: "ArtistCard",
+  components: { ArtistListCard },
+  props: {
+    artists: {
+      type: Object,
+      required: true,
     },
   },
 }

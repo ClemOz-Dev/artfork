@@ -8,7 +8,7 @@ import ArtistDetailView from "../views/artists/ArtistDetailView.vue"
 import GalleriesView from "../views/galleries/GalleriesView.vue"
 import GalleryDetail from "../views/galleries/GalleryDetailView.vue"
 import ExhibitionsView from "../views/exhibitions/ExhibitionsView.vue"
-import TheExhibitionDetail from "../components/exhibition/detail/TheExhibitionDetail.vue"
+import ExhibitionDetailView from "@/views/exhibitions/ExhibitionDetailView.vue";
 import RegisterView from "../views/auth/RegisterView.vue"
 import LoginView from "../views/auth/LoginView.vue"
 import ForgotPasswordView from "../views/auth/ForgotPasswordView.vue"
@@ -61,7 +61,7 @@ const routes = [
   {
     path: "/expositions/:id",
     name: "exhibitions-id",
-    component: TheExhibitionDetail,
+    component: ExhibitionDetailView,
   },
 
   {

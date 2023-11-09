@@ -4,15 +4,15 @@
       {{ title }}
     </template>
   </TheHeader>
-  <TheArtWorkList />
+  <ArtworksArtistList />
 </template>
 <script>
-import TheArtWorkList from "../../components/artwork/list/TheArtworkList.vue"
+import ArtworksArtistList from "../../components/artwork/list/ArtworksArtistList.vue"
 import TheHeader from "../../components/layout/TheHeader.vue"
 
 export default {
   name: "ArtworksPage",
-  components: { TheHeader, TheArtWorkList },
+  components: { TheHeader, ArtworksArtistList },
   data() {
     return {
       title: "Les Oeuvres",
