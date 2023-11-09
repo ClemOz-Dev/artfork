@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import ArtistCard from "../../artist/list/ArtistCard.vue"
-import ArtworksList from "./ArtworkListCard.vue"
+import ArtistCard from "@/components/artist/ArtistCard.vue"
+import ArtworksList from "@/components/artwork/list/ArtworksList.vue"
 
 export default {
-  name: "ArtworkList",
+  name: "ArtworksArtistList",
   components: {
     ArtistCard,
     ArtworksList,

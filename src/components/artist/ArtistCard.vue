@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import formatDateToFrench from "@/utils/date"
+import formatDateToFrench from "@/utils/date.js"
 
 export default {
   name: "ArtistCard",

@@ -25,8 +25,8 @@
 <script>
 // eslint-disable-next-line import/no-unresolved
 import ExhibitionCard from "@/components/exhibition/list/ExhibitionCard.vue"
-import ArtistCard from "@/components/artist/list/ArtistCard.vue"
-import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ArtistCard from "@/components/artist/ArtistCard.vue"
+import ArtworkCard from "@/components/artwork/ArtworkCard.vue"
 
 export default {
   name: "TheExhibitionDetail",

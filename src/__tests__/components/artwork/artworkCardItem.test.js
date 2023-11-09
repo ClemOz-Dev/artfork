@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest"
 import { shallowMount } from "@vue/test-utils"
-import ArtworkCard from "../../../components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ArtworkCard from "@/components/artwork/ArtworkCard.vue"
 
 describe("ArtworkListCardItem Component", () => {
   const artworkData = {

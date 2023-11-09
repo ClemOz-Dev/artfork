@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ArtworkCard from "@/components/artwork/ArtworkCard.vue"
 
 export default {
   name: "ArtworksList",

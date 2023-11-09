@@ -34,7 +34,7 @@
 import { mapGetters } from "vuex"
 import { toast } from "vue3-toastify"
 import ArtworkApiService from "@/services/api/ArtworkApiService"
-import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ArtworkCard from "@/components/artwork/ArtworkCard.vue"
 import ModalCustom from "@/components/UI/ModalCustom.vue"
 import CustomCarousel from "@/components/UI/CustomCarousel.vue"
 import RoundButton from "@/components/UI/RoundButton.vue"

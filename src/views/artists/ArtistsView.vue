@@ -10,7 +10,7 @@
 </template>
 <script>
 import MainHeader from "@/components/layout/MainHeader.vue"
-import ArtistCard from "@/components/artist/list/ArtistCard.vue"
+import ArtistCard from "@/components/artist/ArtistCard.vue"
 import { mapGetters } from "vuex"
 
 export default {
