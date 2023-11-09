@@ -1,15 +1,20 @@
 <template>
   <div>
-    <div v-for="artist in artists" :key="artist.id" class="mb-4">
-      <!-- ArtistListCardItem (on the first row) -->
-      <div class="flex items-start mb-4 ms-4">
-        <ArtistListCard :artist="artist" />
+    <div
+        v-for="(artist, index) in artists"
+        :key="artist.id"
+        :class="{
+          'artworks_full-list': true,
+           'even-background': index % 2 === 0,
+           'odd-background': index % 2 !== 0
+        }">
+      <div class="flex">
+        <ArtistCardFull :artist="artist"/>
       </div>
-      <!-- ArtworkListCard (displayed below ArtistListCardItem) -->
       <SwipperCarousel :items="artist.artworks">
         <template v-slot="{ item }">
-        <ArtworkCard :artwork="item" />
-      </template>
+          <ArtworkCard :artwork="item"/>
+        </template>
       </SwipperCarousel>
     </div>
 
@@ -18,7 +23,7 @@
 </template>
 
 <script>
-import ArtistListCard from "../../artist/list/ArtistListCard.vue"
+import ArtistCardFull from "../../artist/list/ArtistCardFull.vue"
 import ArtworkListCard from "./ArtworkListCard.vue"
 import SwipperCarousel from "@/components/UI/SwipperCarousel.vue";
 import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue";
@@ -28,7 +33,7 @@ export default {
   components: {
     ArtworkCard,
     SwipperCarousel,
-    ArtistListCard,
+    ArtistCardFull,
     ArtworkListCard,
   },
   data() {
@@ -89,3 +94,23 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.artworks_full-list {
+  padding: 18px 12px 18px 12px;
+
+
+  &.even-background {
+    background: rgb(57,57,57);
+background: linear-gradient(90deg, rgba(57,57,55,0.2) 0%, rgba(255,255,255,1) 71%);
+  }
+
+  &.odd-background {
+background: rgb(103,43,12);
+background: linear-gradient(90deg, rgba(103,43,12,0.2) 20%,  rgba(255,255,255,1) 71%);
+
+  }
+}
+
+
+</style>

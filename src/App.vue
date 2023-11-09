@@ -1,20 +1,20 @@
 <template>
   <div class="h-screen flex flex-col">
-    <TheNavBar />
-    <main class="flex-grow p-4 bg-white">
+    <NavBar />
+    <main class="flex-grow bg-white">
       <router-view />
     </main>
     <TheFooter />
   </div>
 </template>
 <script>
-import TheNavBar from "./components/layout/TheNavBar.vue"
+import NavBar from "./components/layout/NavBar.vue"
 import TheFooter from "./components/layout/TheFooter.vue"
 
 export default {
   name: "App",
   components: {
-    TheNavBar,
+    NavBar,
     TheFooter,
   },
   async beforeMount() {

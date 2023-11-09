@@ -78,6 +78,7 @@ export default {
     async handleSaveArtwork(formData) {
       try {
         await this.$store.dispatch("artworkStore/addArtwork", formData)
+        await this.fetchArtworks()
         this.showModal = false
       } catch (error) {
         toast.error(error.message)

@@ -1,9 +1,9 @@
 <template>
   <div>
     <nav
-      class="flex items-center justify-between p-6 bg-red-500 text-white z-50 relative"
+      class="navbar flex items-center justify-between p-6 text-white z-50 relative"
     >
-      <router-link class="text-2xl font-bold" :to="{ name: 'home' }"
+      <router-link class="text-3xl font-bold" :to="{ name: 'home' }"
         >ArtBook</router-link
       >
       <div class="hidden md:flex justify-between flex-grow">
@@ -13,21 +13,21 @@
           <router-link
             :to="{ name: 'artworks' }"
             class="hover:text-black"
-            :class="{ 'text-black underline': $route.name === 'artworks' }"
+            :class="{ 'active-link': $route.name === 'artworks' }"
           >
             Les Oeuvres
           </router-link>
           <router-link
             :to="{ name: 'artists' }"
             class="hover:text-black"
-            :class="{ 'text-black underline': $route.name === 'artists' }"
+            :class="{ 'active-link': $route.name === 'artists' }"
           >
             Les Artistes
           </router-link>
           <router-link
             :to="{ name: 'exhibitions' }"
             class="hover:text-black"
-            :class="{ 'text-black underline': $route.name === 'exhibitions' }"
+            :class="{ 'active-link': $route.name === 'exhibitions' }"
           >
             Les Expositions
           </router-link>
@@ -174,7 +174,7 @@ import IconPower from "../UI/ImagesAndIcons/IconPower.vue";
 import DropDownMixin from "../../mixins/DropDownMixin.js";
 
 export default {
-  name: "TheNavBar",
+  name: "NavBar",
   components: { IconPower, IconAvatar },
   mixins: [DropDownMixin],
   data() {
@@ -201,3 +201,15 @@ export default {
   },
 };
 </script>
+<style scoped>
+.navbar {
+  background: rgb(204,85,24);
+  background: linear-gradient(335deg, rgba(204,85,24,1) 14%, rgba(233,74,74,1) 64%);
+}
+
+.active-link {
+  color: black;
+  scale: 1.1;
+}
+
+</style>

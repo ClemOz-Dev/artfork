@@ -18,10 +18,10 @@
       },
     }"
     :modules="modules"
-    class="artworkSwiper"
+    class="artworkSwiper bg-transparent"
   >
     <swiper-slide
-      class="bg-red-300 flex justify-center p-2"
+      class="bg-transparent flex justify-center p-2"
       v-for="artwork in artworks"
       :key="artwork.id"
     >

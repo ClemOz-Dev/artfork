@@ -5,7 +5,7 @@
   .swiper-slide {
       text-align: center;
       font-size: 18px;
-      background: #fff;
+      background: transparent;
       display: flex;
       flex-direction: column;
       justify-content: space-around;

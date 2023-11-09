@@ -19,7 +19,7 @@
     </h2>
     <SwipperCarousel :items="artists" :displayed-count="5">
       <template v-slot="{ item }">
-        <ArtistCard :artist="item" />
+        <ArtistCardHome :artist="item" />
       </template>
     </SwipperCarousel>
   </section>
@@ -38,7 +38,7 @@
 </template>
 <script>
 import SwipperCarousel from "@/components/UI/SwipperCarousel.vue"
-import ArtistCard from "@/components/artist/list/ArtistListCard.vue"
+import ArtistCardHome from "@/components/artist/list/ArtistCardHome.vue"
 import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
 import { mapGetters } from "vuex"
 import ExhibitionCard from "@/components/exhibition/list/ExhibitionListCardItem.vue"
@@ -48,7 +48,7 @@ export default {
   components: {
     ExhibitionCard,
     ArtworkCard,
-    ArtistCard,
+    ArtistCardHome,
     SwipperCarousel,
   },
   computed: {

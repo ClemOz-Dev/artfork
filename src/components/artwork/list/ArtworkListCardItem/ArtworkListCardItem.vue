@@ -93,12 +93,13 @@ export default {
   position: relative;
   width: 100%;
   padding: 0;
-  height: 100%;
+
+  min-height: 250px;
   box-sizing: border-box;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  background-color: #424040;
+  background-color: transparent;
   -webkit-box-shadow: 0 0 12px 3px rgba(73, 73, 73, 0.37);
   box-shadow: 0 0 12px 3px rgba(73, 73, 73, 0.37);
   &:hover {
@@ -109,6 +110,7 @@ export default {
 .artwork-image {
   flex: 1;
   width: 100%;
+    background-color: transparent;
   border-radius: 12px;
   object-fit: fill;
 }
@@ -128,11 +130,17 @@ export default {
 
   .artwork-title {
     font-weight: 600;
-    font-size: 24px;
+    font-size: 1.2rem;
+        overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
   .artwork-description {
     font-size: 12px;
     font-style: italic;
+       overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 

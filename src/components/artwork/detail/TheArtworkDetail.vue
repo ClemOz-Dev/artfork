@@ -8,9 +8,6 @@
         <div>
           <h1 class="text-xl font-bold">{{ artwork.name }}</h1>
           <p class="text-gray-500">{{ fullName }}</p>
-          <button type="button" class="mt-3 p-2 bg-primary text-white rounded">
-            Acquérir cette oeuvre
-          </button>
         </div>
         <div class="mt-10">
           <h2 class="text-gray-500 pb-3">{{ artwork.category.label }}</h2>

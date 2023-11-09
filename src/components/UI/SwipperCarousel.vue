@@ -22,7 +22,7 @@
     :modules="modules"
     class="swipper-carousel"
   >
-    <swiper-slide v-for="(item, index) in items" :key="index">
+    <swiper-slide class="bg-transparent" v-for="(item, index) in items" :key="index">
       <slot :item="item"></slot>
     </swiper-slide>
   </swiper>
