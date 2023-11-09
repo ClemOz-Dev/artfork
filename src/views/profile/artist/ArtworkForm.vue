@@ -34,8 +34,11 @@
         :errors="formErrors"
         @category-selected="selectChange"
       />
+      <div v-if="isLoading" class="mt-4">
+        <SpinningLoader />
+      </div>
 
-      <div class="modal-footer mt-4 flex justify-between">
+      <div v-else class="modal-footer mt-4 flex justify-between">
         <button
           type="button"
           @click="closeModal"
@@ -43,6 +46,7 @@
         >
           Fermer
         </button>
+
         <button
           type="submit"
           class="confirm px-4 py-2 bg-blue-500 text-white rounded-full"
@@ -58,9 +62,16 @@ import { mapGetters } from "vuex"
 import BaseInput from "../../../components/form/BaseInput.vue"
 import appendIfNotNull from "../../../utils/form"
 import BaseSelect from "../../../components/form/BaseSelect.vue"
+import SpinningLoader from "../../../components/UI/SpinningLoader.vue"
 
 export default {
-  components: { BaseSelect, BaseInput },
+  components: { SpinningLoader, BaseSelect, BaseInput },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       name: null,

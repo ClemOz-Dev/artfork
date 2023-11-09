@@ -1,18 +1,18 @@
 <template>
-  <TheHeader>
+  <MainHeader>
     <template #title>
       {{ title }}
     </template>
-  </TheHeader>
-  <TheArtWorkList />
+  </MainHeader>
+  <ArtworkList />
 </template>
 <script>
-import TheArtWorkList from "../../components/artwork/list/TheArtworkList.vue"
-import TheHeader from "../../components/layout/TheHeader.vue"
+import ArtworkList from "@/components/artwork/list/ArtworkList.vue"
+import MainHeader from "@/components/layout/MainHeader.vue"
 
 export default {
-  name: "ArtworksPage",
-  components: { TheHeader, TheArtWorkList },
+  name: "ArtworksView",
+  components: { MainHeader, ArtworkList },
   data() {
     return {
       title: "Les Oeuvres",

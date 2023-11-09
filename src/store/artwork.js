@@ -58,6 +58,7 @@ const actions = {
 
 const getters = {
   formErrors: (state) => state.form_errors,
+  artworks: (state) => state.artworks,
 }
 
 export default {

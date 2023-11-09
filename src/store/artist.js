@@ -1,4 +1,4 @@
-import ArtistApiService from "../services/api/ArtistApiService.js"
+import ArtistApiService from "../services/api/ArtistApiService"
 
 const state = () => ({
   artists: [],
@@ -33,9 +33,15 @@ const actions = {
   },
 }
 
+const getters = {
+  artists: (state) => state.artists,
+  artist: (state) => state.artist,
+}
+
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
+  getters,
 }

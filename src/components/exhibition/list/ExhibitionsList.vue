@@ -3,14 +3,14 @@
     v-if="!isHomePage"
     class="grid grid-cols-1 md:grid-cols-3 gap-4 ml-[90px]"
   >
-    <ExhibitionListCardItem
+    <ExhibitionCard
       v-for="(exhibition, index) in exhibitions"
       :key="index"
       :exhibition="exhibition"
     />
   </div>
   <div v-else>
-    <ExhibitionListCardItem
+    <ExhibitionCard
       v-for="(exhibition, index) in showFirstFourExhibitions"
       :key="index"
       :exhibition="exhibition"
@@ -19,11 +19,12 @@
 </template>
 
 <script>
-import ExhibitionListCardItem from "./ExhibitionListCardItem.vue"
+import ExhibitionCard from "./ExhibitionCard.vue"
 
 export default {
+  name: "ExhibitionList",
   components: {
-    ExhibitionListCardItem,
+    ExhibitionCard,
   },
   computed: {
     isHomePage() {

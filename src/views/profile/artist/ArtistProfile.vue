@@ -10,7 +10,7 @@
         :key="artwork.id"
         class="w-full md:w-1/2 lg:w-1/3 p-4"
       >
-        <ArtworkListCardItem @on-delete="fetchArtworks" :artwork="artwork" />
+        <ArtworkCard @on-delete="fetchArtworks" :artwork="artwork" />
       </div>
     </CustomCarousel>
 
@@ -24,6 +24,7 @@
       <ArtworkForm
         @update="handleSaveArtwork"
         @close-modal="showModal = false"
+        :is-loading="isLoading"
       />
     </ModalCustom>
   </div>
@@ -32,22 +33,21 @@
 <script>
 import { mapGetters } from "vuex"
 import { toast } from "vue3-toastify"
-import ArtworkApiService from "../../../services/api/ArtworkApiService"
-import ArtworkListCardItem from "../../../components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
-import CustomCarousel from "../../../components/UI/CustomCarousel.vue"
+import ArtworkApiService from "@/services/api/ArtworkApiService"
+import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ModalCustom from "@/components/UI/ModalCustom.vue"
+import CustomCarousel from "@/components/UI/CustomCarousel.vue"
+import RoundButton from "@/components/UI/RoundButton.vue"
 import ArtworkForm from "./ArtworkForm.vue"
-import RoundButton from "../../../components/UI/RoundButton.vue"
-import ModalCustom from "../../../components/UI/ModalCustom.vue"
 
 export default {
   name: "ArtistProfile",
-  // eslint-disable-next-line vue/no-reserved-component-names
   components: {
     ModalCustom,
     RoundButton,
     ArtworkForm,
     CustomCarousel,
-    ArtworkListCardItem,
+    ArtworkCard,
   },
   data() {
     return {
@@ -77,11 +77,14 @@ export default {
     },
     async handleSaveArtwork(formData) {
       try {
+        this.isLoading = true
         await this.$store.dispatch("artworkStore/addArtwork", formData)
+        this.artworks = await ArtworkApiService.getArtworks(this.currentUser.id)
         this.showModal = false
       } catch (error) {
         toast.error(error.message)
       }
+      this.isLoading = false
     },
   },
 }

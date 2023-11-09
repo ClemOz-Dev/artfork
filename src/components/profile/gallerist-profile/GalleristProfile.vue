@@ -54,6 +54,7 @@
             </a>
           </div>
         </div>
+
       </div>
     </CustomCarousel>
     <GalleryForm @update="handleGalleryCreate" />
@@ -105,7 +106,7 @@ export default {
     },
     async fetchGalleries() {
       const galleries = await GalleryApiService.getGalleriesByGallerist(
-        this.getMe.id,
+        this.currentUser.id,
       )
       store.commit("userStore/SET_MY_GALLERIES", galleries)
     },

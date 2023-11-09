@@ -20,6 +20,15 @@ module.exports = {
     "no-shadow": ["error", { allow: ["state"] }],
     "no-param-reassign": ["error", { props: false }],
     "import/no-cycle": "off",
-    "eslint import/no-extraneous-dependencies": 'off'
   },
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [
+          ["@", "./src"]
+        ],
+        extensions: [".js", ".vue", ".json"]
+      }
+    }
+  }
 }

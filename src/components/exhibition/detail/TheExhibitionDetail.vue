@@ -1,13 +1,13 @@
 <template>
   <div class="mb-4 m-4">
-    <ExhibitionListCardItem v-if="exhibition" :exhibition="exhibition" />
+    <ExhibitionCard v-if="exhibition" :exhibition="exhibition" />
     <div class="flex flex-wrap">
       <div
         v-for="(artwork, index) in filterArtist"
         :key="index"
         class="w-full sm:w-1/2 lg:w-1/3 p-4 mb-4 shadow-base-200"
       >
-        <ArtistListCardItem v-if="artwork.artist" :artist="artwork.artist" />
+        <ArtistCard v-if="artwork.artist" :artist="artwork.artist" />
       </div>
     </div>
     <div class="flex flex-wrap">
@@ -16,7 +16,7 @@
         :key="index"
         class="w-full sm:w-1/2 p-4 mb-4 shadow-base-200"
       >
-        <ArtworkListCardItem v-if="artwork" :artwork="artwork" />
+        <ArtworkCard v-if="artwork" :artwork="artwork" />
       </div>
     </div>
   </div>
@@ -24,16 +24,16 @@
 
 <script>
 // eslint-disable-next-line import/no-unresolved
-import ExhibitionListCardItem from "../list/ExhibitionListCardItem.vue"
-import ArtistListCardItem from "../../artist/list/ArtistListCardItem.vue"
-import ArtworkListCardItem from "../../artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ExhibitionCard from "../list/ExhibitionCard.vue"
+import ArtistCard from "../../artist/list/ArtistCard.vue"
+import ArtworkCard from "../../artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
 
 export default {
   name: "TheExhibitionDetail",
   components: {
-    ExhibitionListCardItem,
-    ArtistListCardItem,
-    ArtworkListCardItem,
+    ExhibitionCard,
+    ArtistCard,
+    ArtworkCard,
   },
   computed: {
     exhibition() {

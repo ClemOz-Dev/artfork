@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest"
 import { shallowMount } from "@vue/test-utils"
-import ArtworkListCardItem from "../../../components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
+import ArtworkCard from "../../../components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
 
 describe("ArtworkListCardItem Component", () => {
   const artworkData = {
@@ -10,7 +10,7 @@ describe("ArtworkListCardItem Component", () => {
 
   // Create a reusable function to create component wrappers with different props
   const createWrapper = (props) =>
-    shallowMount(ArtworkListCardItem, {
+    shallowMount(ArtworkCard, {
       props,
     })
 

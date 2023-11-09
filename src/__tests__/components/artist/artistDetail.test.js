@@ -1,6 +1,6 @@
 import { test, expect } from "vitest"
-import TheArtistDetail from "../../../components/artist/detail/TheArtistDetail.vue"
+import ArtistDetail from "../../../components/artist/detail/TheArtistDetail.vue"
 
 test("mount component", async () => {
-  expect(TheArtistDetail).toBeTruthy()
+  expect(ArtistDetail).toBeTruthy()
 })

@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router"
 
-import HomeView from "../views/HomeView.vue"
-import ArtworksView from "../views/artworks/ArtworksView.vue"
-import ArtworkDetailView from "../views/artworks/ArtworkDetailView.vue"
-import ArtistsView from "../views/artists/ArtistsView.vue"
-import ArtistDetailView from "../views/artists/ArtistDetailView.vue"
-import GalleriesView from "../views/galleries/GalleriesView.vue"
-import GalleryDetail from "../views/galleries/GalleryDetailView.vue"
-import ExhibitionsView from "../views/exhibitions/ExhibitionsView.vue"
-import TheExhibitionDetail from "../components/exhibition/detail/TheExhibitionDetail.vue"
-import RegisterView from "../views/auth/RegisterView.vue"
-import LoginView from "../views/auth/LoginView.vue"
-import ForgotPasswordView from "../views/auth/ForgotPasswordView.vue"
-import ResetPasswordView from "../views/auth/ResetPasswordView.vue"
-import ProfileView from "../views/profile/ProfileView.vue"
-import ContactView from "../views/ContactView.vue"
-import CGVView from "../views/CGVView.vue"
+import HomeView from "@/views/HomeView.vue"
+import ArtworksView from "@/views/artworks/ArtworksView.vue"
+import ArtworkDetailView from "@/views/artworks/ArtworkDetailView.vue"
+import ArtistsView from "@/views/artists/ArtistsView.vue"
+import ArtistDetailView from "@/views/artists/detail/ArtistDetailView.vue"
+import GalleriesView from "@/views/galleries/GalleriesView.vue"
+import GalleryDetail from "@/views/galleries/GalleryDetailView.vue"
+import ExhibitionView from "@/views/exhibitions/ExhibitionsView.vue"
+import TheExhibitionDetail from "@/components/exhibition/detail/TheExhibitionDetail.vue"
+import RegisterView from "@/views/auth/RegisterView.vue"
+import LoginView from "@/views/auth/LoginView.vue"
+import ForgotPasswordView from "@/views/auth/ForgotPasswordView.vue"
+import ResetPasswordView from "@/views/auth/ResetPasswordView.vue"
+import ProfileView from "@/views/profile/ProfileView.vue"
+import ContactView from "@/views/ContactView.vue"
+import CGVView from "@/views/CGVView.vue"
 
 const routes = [
   {
@@ -56,7 +56,7 @@ const routes = [
   {
     path: "/expositions",
     name: "exhibitions",
-    component: ExhibitionsView,
+    component: ExhibitionView,
   },
   {
     path: "/expositions/:id",

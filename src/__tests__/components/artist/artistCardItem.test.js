@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest"
 import { shallowMount } from "@vue/test-utils"
-import ArtistListCardItem from "../../../components/artist/list/ArtistListCardItem.vue"
+import ArtistCard from "../../../components/artist/list/ArtistListCardItem.vue"
 import router from "../../../router/index.js"
 
 describe("ArtistListCardItem Component", () => {
@@ -16,7 +16,7 @@ describe("ArtistListCardItem Component", () => {
 
   // Create a reusable function to create component wrappers with different props
   const createWrapper = (props) =>
-    shallowMount(ArtistListCardItem, {
+    shallowMount(ArtistCard, {
       global: {
         plugins: [router],
       },

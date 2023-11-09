@@ -94,7 +94,7 @@ export default {
         lastName: null,
         birthdate: null,
         description: null,
-        image: "public/img/artist.png",
+        image: "/img/artist.png",
       },
       initialData: null,
       errors: {},

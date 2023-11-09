@@ -1,9 +1,9 @@
 <template>
-  <ArtistCard :artists="artists" />
+  <ArtistCard v-for="artist in artists" :artist="artist" :key="artist.id" />
 </template>
 
 <script>
-import ArtistCard from "./ArtistListCard.vue"
+import ArtistCard from "./ArtistCard.vue"
 
 export default {
   components: { ArtistCard },

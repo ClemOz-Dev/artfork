@@ -3,10 +3,10 @@
     <div v-for="artist in artists" :key="artist.id" class="mb-4">
       <!-- ArtistListCardItem (on the first row) -->
       <div class="flex items-start mb-4 ms-4">
-        <ArtistListCardItem :artist="artist" />
+        <ArtistCard :artist="artist" />
       </div>
       <!-- ArtworkListCard (displayed below ArtistListCardItem) -->
-      <ArtworkListCard :artworks="artist.artworks" />
+      <ArtworksList :artworks="artist.artworks" />
     </div>
 
     <div ref="bottom" style="height: 1px"></div>
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import ArtistListCardItem from "../../artist/list/ArtistListCardItem.vue"
-import ArtworkListCard from "./ArtworkListCard.vue"
+import ArtistCard from "../../artist/list/ArtistCard.vue"
+import ArtworksList from "./ArtworkListCard.vue"
 
 export default {
-  name: "TheArtWorkList",
+  name: "ArtworkList",
   components: {
-    ArtistListCardItem,
-    ArtworkListCard,
+    ArtistCard,
+    ArtworksList,
   },
   data() {
     return {

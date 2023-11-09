@@ -1,5 +1,5 @@
 import { toast } from "vue3-toastify"
-import axiosInstance from "../axios.js"
+import axiosInstance from "../axios"
 
 class ArtWorkApiService {
   /**

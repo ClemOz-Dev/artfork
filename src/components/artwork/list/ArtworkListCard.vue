@@ -1,75 +1,25 @@
 <template>
-  <swiper
-    :navigation="true"
-    :slidesPerView="1"
-    :loop="true"
-    :breakpoints="{
-      '640': {
-        slidesPerView: 1,
-        spaceBetween: 20,
-      },
-      '768': {
-        slidesPerView: 4,
-        spaceBetween: 20,
-      },
-      '1024': {
-        slidesPerView: 3,
-        spaceBetween: 0,
-      },
-    }"
-    :modules="modules"
-    class="artworkSwiper"
-  >
-    <swiper-slide
-      class="bg-red-300 flex justify-center p-2"
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 ml-[90px]">
+    <ArtworkCard
       v-for="artwork in artworks"
+      :artwork="artwork"
       :key="artwork.id"
-    >
-      <div @click="redirectToArtwork(artwork)">
-        <ArtworkListCardItem
-          is-clickable
-          class="cursor-pointer"
-          :artwork="artwork"
-        />
-      </div>
-    </swiper-slide>
-  </swiper>
+    />
+  </div>
 </template>
 
 <script>
-// eslint-disable-next-line import/no-unresolved
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, Navigation } from "swiper/modules"
-import ArtworkListCardItem from "./ArtworkListCardItem/ArtworkListCardItem.vue"
-
-// eslint-disable-next-line import/no-unresolved
-import "swiper/css"
-// eslint-disable-next-line import/no-unresolved
-import "swiper/css/pagination"
-// eslint-disable-next-line import/no-unresolved
-import "swiper/css/navigation"
+import ArtworkCard from "@/components/artwork/list/ArtworkListCardItem/ArtworkListCardItem.vue"
 
 export default {
-  name: "ArtWorkListCard",
+  name: "ArtworksList",
   components: {
-    Swiper,
-    SwiperSlide,
-    ArtworkListCardItem,
+    ArtworkCard,
   },
   props: {
     artworks: {
-      type: Object,
-      required: false,
-    },
-  },
-  data() {
-    return {
-      modules: [Autoplay, Pagination, Navigation],
-    }
-  },
-  methods: {
-    redirectToArtwork(artwork) {
-      this.$router.push({ name: "artworks-id", params: { id: artwork.id } })
+      type: Array,
+      required: true,
     },
   },
 }

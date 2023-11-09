@@ -15,18 +15,21 @@
 
     <img
       class="artwork-image"
-      :src="artwork.image ?? '/img/brush.jpg'"
-      :alt="artwork.description"
+      :src="exhibition.gallery.image ?? '/img/brush.jpg'"
+      :alt="exhibition.gallery.description"
     />
 
     <div class="infos-container">
-      <a href="#">
-        <h5 class="artwork-title">
-          {{ artwork.name }}
-        </h5>
-      </a>
+      <h5 class="artwork-title">
+        {{ exhibition.name }}
+      </h5>
+      <p class="text-xs">Du {{ formatStartDate }} au {{ formatEndDate }}</p>
       <p class="artwork-description">
-        {{ artwork.description }}
+        {{
+          isExhibitionDetailPage
+            ? getFullLocation(exhibition.gallery)
+            : getLocation(exhibition.gallery)
+        }}
       </p>
     </div>
   </div>
@@ -35,15 +38,22 @@
 <script>
 import { mapGetters } from "vuex"
 import DSModal from "@/components/DS/DSModal.vue"
+import formatDateToFrench from "@/utils/date"
+import AddressMixin from "@/mixins/AddressMixin"
 
 export default {
-  name: "ArtworkCard",
+  name: "ExhibitionCard",
   components: { DSModal },
   emits: ["on-delete"],
+  mixins: [AddressMixin],
   props: {
-    artwork: {
+    exhibition: {
       type: Object,
       required: true,
+    },
+    isClickable: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -53,21 +63,31 @@ export default {
   },
   computed: {
     ...mapGetters("userStore", ["currentUser"]),
-    isOwn() {
-      if (this.currentUser) {
-        return this.currentUser.id === this.artwork.userId
-      }
-      return false
+    isExhibitionPage() {
+      return this.$route.name === "exhibitions"
     },
     isExhibitionDetailPage() {
+      // "{ name: 'exhibitions-id', params: { id: exhibition.id } }"
       return this.$route.name === "exhibitions-id"
+    },
+    formatStartDate() {
+      return formatDateToFrench(this.exhibition.startDate)
+    },
+    formatEndDate() {
+      return formatDateToFrench(this.exhibition.endDate)
+    },
+    isOwn() {
+      if (this.currentUser) {
+        return this.currentUser.id === this.exhibition.userId
+      }
+      return false
     },
   },
   methods: {
     showDetail() {
       this.$router.push({
-        name: "artworks-id",
-        params: { id: this.artwork.id },
+        name: "exhibitions-id",
+        params: { id: this.exhibition.id },
       })
     },
     async deleteArtwork() {
@@ -101,6 +121,7 @@ export default {
   background-color: #424040;
   -webkit-box-shadow: 0 0 12px 3px rgba(73, 73, 73, 0.37);
   box-shadow: 0 0 12px 3px rgba(73, 73, 73, 0.37);
+
   &:hover {
     cursor: pointer;
   }
@@ -120,8 +141,8 @@ export default {
   bottom: 0;
   left: 0;
   padding: 1rem;
-  overflow: hidden;
-  max-height: 30%;
+  overflow: auto;
+  max-height: 50%;
   border-radius: 0 0 12px 12px;
   border-top: #d7d6d6 solid 0.5px;
   text-align: right;
