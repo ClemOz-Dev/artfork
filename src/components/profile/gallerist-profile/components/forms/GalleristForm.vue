@@ -1,90 +1,155 @@
 <template>
-  <section class="add-gallery">
-    <h3>Ajouter une gallerie</h3>
-    <Form class="add-gallery-form" @submit="saveGallery" ref="form">
-      <BaseInput
-        label="Description"
-        type="text"
-        name="description"
-        placeholder=""
-      />
-      <BaseInput label="Image" type="text" name="image" placeholder="" />
-      <BaseInput label="Voie" type="text" name="road" placeholder="" />
-      <BaseInput
-        label="Code postal"
-        type="text"
-        name="zipcode"
-        @input="onZipCodeChange"
-      />
-      <LocalitiesList
-        :select-result="selectLocality"
-        :localities="localities"
-      />
-      <BaseInput
-        v-model:value="selectedCity"
-        name="city"
-        label="Ville"
-        :is-disabled="true"
-      />
-      <BaseInput label="Pays" type="text" name="country" />
-      <button type="submit">Enregistrer une galerie</button>
-    </Form>
+  <section>
+    <form @submit.prevent="saveGallery" ref="form">
+      <div class="in-row">
+        <BaseInput
+            :value="description"
+            type="text"
+            name="description"
+            label="Description"
+            :errors="formErrors"
+            class="mr-2"
+            @input-changed="inputChange('description', $event)"
+        />
+        <BaseInput
+            label="Image de l'Œuvre"
+            type="file"
+            name="image"
+            :errors="formErrors"
+            @change="handleFileChange"
+        />
+      </div>
+
+      <div class="in-row">
+        <BaseInput
+            :value="road"
+            type="text"
+            name="road"
+            label="Voie"
+            :errors="formErrors"
+            class="mr-2"
+            @input-changed="inputChange('road', $event)"
+        />
+        <BaseInput
+            :value="country"
+            type="text"
+            name="country"
+            label="Pays"
+            :errors="formErrors"
+            class="mr-2"
+            @input-changed="inputChange('country', $event)"
+        />
+
+      </div>
+      <div class="in-row">
+        <div>
+          <BaseInput
+              label="Code postal"
+              type="number"
+              name="zipcode"
+              :errors="formErrors"
+              @input="onZipCodeChange"
+          />
+          <LocalitiesList
+              :select-result="selectLocality"
+              :localities="localities"
+          />
+        </div>
+
+        <BaseInput
+            :value="city"
+            name="city"
+            label="Ville"
+            :errors="formErrors"
+            :is-disabled="true"
+        />
+      </div>
+
+
+      <div class="modal-footer mt-4 flex justify-between">
+        <button
+            type="button"
+            @click="closeModal"
+            class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-full mr-2"
+        >
+          Fermer
+        </button>
+        <button
+            type="submit"
+            class="confirm px-4 py-2 bg-blue-500 text-white rounded-full"
+        >
+          Valider
+        </button>
+      </div>
+    </form>
   </section>
 </template>
 
 <script>
-import * as yup from "yup"
-import { Form } from "vee-validate"
-import BaseInput from "../../../../form/BaseInput.vue"
-import LocalitiesList from "../../../../form/LocalitiesList.vue"
-import GalleryApiService from "../../../../../services/api/GalleryApiService"
-import LocalisationService from "../../../../../services/business/Localisation"
+import BaseInput from "@/components/form/BaseInput.vue"
+import LocalitiesList from "@/components/form/LocalitiesList.vue"
+import LocalisationService from "@/services/business/Localisation"
+import appendIfNotNull from "@/utils/form.js";
+import {mapGetters} from "vuex";
 
 export default {
-  // eslint-disable-next-line vue/no-reserved-component-names
-  components: { LocalitiesList, BaseInput, Form },
+  components: {LocalitiesList, BaseInput},
   data() {
     return {
-      schema: yup.object({
-        description: yup.string().required("Veuillez fournir une description."),
-        image: yup.string().required("Veuillez fournir une image."),
-        road: yup.string().required("Veuillez fournir une voie."),
-        zipcode: yup.string().required("Veuillez fournir un code postal."),
-        country: yup
-          .string()
-          .required("Veuillez fournir un pays.")
-          .default("France"),
-      }),
+      description: null,
+      image: null,
+      road: null,
+      zipcode: null,
+      country: null,
+      city: "France",
       localities: [],
-      selectedCity: null,
     }
   },
+  computed: {
+    ...mapGetters("galleristStore", ["formErrors"]),
+  },
   methods: {
-    async saveGallery(schema) {
-      const payload = { city: this.selectedCity, ...schema }
-      try {
-        await GalleryApiService.createGallery(payload)
-        this.$refs.form.resetForm()
-      } catch (e) {
-        console.error(e.toString())
-      }
-      await this.$emit("update")
+    closeModal() {
+      this.$emit("close-modal")
     },
-
+    inputChange(name, value) {
+      this[name] = value
+    },
+    handleFileChange(event) {
+      const [file] = event.target.files
+      this.image = file
+    },
+    async saveGallery() {
+      const formData = new FormData()
+      appendIfNotNull("description", this.description, formData)
+      appendIfNotNull("image", this.image, formData)
+      appendIfNotNull("road", this.road, formData)
+      appendIfNotNull("zipcode", this.zipcode, formData)
+      appendIfNotNull("city", this.city, formData)
+      appendIfNotNull("country", this.country, formData)
+      this.$emit("update", formData)
+    },
     async onZipCodeChange(event) {
-      const { value } = event.target
+      const {value} = event.target
+      this.inputChange("zipcode", value)
 
       if (value.length < 5) {
-        this.selectedCity = null
+        this.city = null
         this.localities = []
       } else {
         this.localities = await LocalisationService.fetchLocalities(value)
       }
     },
     selectLocality(locality) {
-      this.selectedCity = locality.nomCommune
+      this.city = locality.nomCommune
       this.localities = []
     },
   },
 }
 </script>
+<style lang="scss" scoped>
+.in-row {
+  display: flex;
+}
+
+</style>

@@ -1,138 +1,132 @@
 <template>
-  <section class="add-artwork">
-    <h3>Ajouter une exposition</h3>
-    <Form
-      @submit="saveExhibition"
-      :validation-schema="schema"
-      ref="form"
-      class="flex flex-col md:flex-row"
-    >
-      <div>
-        <BaseInput label="Nom" type="text" name="name" placeholder="" />
-        <BaseInput label="Description" type="text" name="description" />
-        <BaseInput
-          label="Date de début de l\'exposition"
+  <section>
+    <form @submit.prevent="saveExhibition">
+      <BaseInput label="Nom" type="text" name="name" :value="newExhibition.name"
+                 @input-changed="inputChange('name', $event)"
+      />
+      <BaseInput label="Description" type="text" name="description" :value="newExhibition.description"
+                 @input-changed="inputChange('description', $event)"/>
+      <BaseInput
+          label="Date de début de l'exposition"
           type="date"
           name="startDate"
-        />
-        <BaseInput
-          label="Date de fin de l\'exposition"
+          :value="newExhibition.startDate"
+          @input-changed="inputChange('startDate', $event)"
+      />
+      <BaseInput
+          label="Date de fin de l'exposition"
           type="date"
           name="endDate"
-        />
-        <BaseSelect
+          :value="newExhibition.endDate"
+          @input-changed="inputChange('endDate', $event)"
+      />
+      <BaseSelect
           default-value=""
-          :options="myGalleries"
+          :options="galleries"
           name="gallery_id"
           label="Galeries"
-        />
-        <MultiSelect :options="artworksData" />
+          @option-selected="inputChange('galleryId', $event)"
+      />
+      <MultiSelect :options="artworksData" name="artworks" @options-selected="inputChange('artworks', $event)"/>
+
+      <div class="modal-footer mt-4 flex justify-between">
+        <button
+            type="button"
+            @click="closeModal"
+            class="px-4 py-2 bg-gray-200 text-gray-700 hover:bg-gray-300 rounded-full mr-2"
+        >
+          Fermer
+        </button>
+        <button
+            type="submit"
+            class="confirm px-4 py-2 bg-blue-500 text-white rounded-full"
+        >
+          Valider
+        </button>
       </div>
-      <div class="ml-2 md:grid md:place-self-end">
-        <button type="submit">Enregistrer une exposition</button>
-      </div>
-    </Form>
+    </form>
   </section>
 </template>
 
 <script>
-import * as yup from "yup"
-import { Form } from "vee-validate"
-import { mapGetters } from "vuex"
-import MultiSelect from "../../../../form/MultiSelect.vue"
-import BaseInput from "../../../../form/BaseInput.vue"
-import ExhibitionApiService from "../../../../../services/api/ExhibitionApiService"
-import ArtWorkApiService from "../../../../../services/api/ArtworkApiService"
-import BaseSelect from "../../../../form/BaseSelect.vue"
+import {mapGetters} from "vuex"
+import MultiSelect from "@/components/form/MultiSelect.vue"
+import BaseInput from "@/components/form/BaseInput.vue"
+import ArtWorkApiService from "@/services/api/ArtworkApiService"
+import BaseSelect from "@/components/form/BaseSelect.vue"
 
 export default {
-  // eslint-disable-next-line vue/no-reserved-component-names
-  components: { BaseSelect, BaseInput, Form, MultiSelect },
+  components: {BaseSelect, BaseInput, MultiSelect},
   data() {
     return {
-      schema: yup.object({
-        name: yup.string().required("Veuillez fournir un nom."),
-        description: yup.string().required("Veuillez fournir une description."),
-        startDate: yup.string().required("Veuillez fournir une date de début."),
-        endDate: yup.string().required("Veuillez fournir une date de fin."),
-        artworks: yup.array().of(yup.object()),
-        gallery_id: yup.string().required("Veuillez choisir une galerie."),
-      }),
       artworksData: [],
+      newExhibition: {
+        name: null,
+        description: null,
+        startDate: null,
+        endDate: null,
+        galleryId: null,
+        artworks: [],
+      },
     }
   },
   async beforeMount() {
     await this.fetchArtworks()
+    await this.fetchGalleries()
   },
   computed: {
-    ...mapGetters("userStore", ["currentUser", "myGalleries"]),
+    ...mapGetters("userStore", ["currentUser"]),
+    ...mapGetters("galleristStore", ["galleries"]),
+
   },
   methods: {
+    inputChange(name, value) {
+      this.newExhibition[name] = value
+    },
+    closeModal() {
+      this.$emit("close-modal")
+    },
+    async fetchGalleries() {
+      await this.$store.dispatch("galleristStore/fetchGalleries", this.currentUser.id)
+    },
     async fetchArtworks() {
       const artworksInExhibition =
-        await ArtWorkApiService.getArtworksInExhibition()
-      const artworksOutExhibition = artworksInExhibition.filter(
-        (artwork) => artwork.exhibitions.length === 0,
+          await ArtWorkApiService.getArtworksInExhibition()
+      this.artworksData = artworksInExhibition.filter(
+          (artwork) => artwork.exhibitions.length === 0,
       )
-      this.artworksData = artworksOutExhibition
     },
-    async saveExhibition(schema) {
-      const artworkIds = schema.artworks.map((artwork) => artwork.id)
-      schema.artworks.map((artwork) => delete artwork.exhibitions)
-      const newData = {
-        ...schema,
-        artworks: artworkIds,
-      }
-      try {
-        await ExhibitionApiService.createExhibition(newData)
-        this.$refs.form.resetForm()
-      } catch (e) {
-        console.error(e.toString())
-      }
-      await this.$emit("update")
+    async saveExhibition() {
+      this.$emit("update", this.newExhibition)
     },
+
   },
 }
 </script>
-<style scoped lang="scss">
-.add-gallery {
-  padding: 50px;
-}
 
-.add-gallery button {
-  background: #ef4444;
-  height: 40px;
-  color: white;
-  font-weight: 700;
-  width: 315px;
-  border-radius: 6.7px;
-  margin-top: 2rem;
-}
+<style lang="scss" scoped>
+.nav-button {
+  width: 30px;
+  border: solid gray 0.5px;
+  border-radius: 50%;
 
-.add-gallery-form {
-  width: 50%;
-  display: flex;
-  flex-wrap: wrap;
-}
+  &.next {
+    color: #ef4444;
+    transform: rotate(180deg);
 
-h3 {
-  font-size: 32px;
-  font-weight: 700;
-}
-
-/*Média-queries*/
-@media all and (max-width: 768px) {
-  .add-gallery {
-    padding: 0;
-    margin-top: 40px;
+    &:disabled {
+      background-color: #ccc9c9;
+    }
   }
 
-  .add-gallery button {
-    width: 100%;
-  }
+}
 
-  .add-gallery-form {
-    width: 100%;
+.confirm {
+  background-color: #ef4444;
+
+  &:disabled {
+    background-color: #ccc9c9;
   }
 }
 </style>
+

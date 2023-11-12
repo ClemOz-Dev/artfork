@@ -10,6 +10,7 @@ const authRoutes = [
   "/api/artworks",
   "/api/galleries",
   "/api/users/",
+  "/api/exhibitions",
 ]
 
 axiosInstance.interceptors.response.use(
@@ -45,6 +46,7 @@ axiosInstance.interceptors.response.use(
 
 axiosInstance.interceptors.request.use(async (config) => {
   if (authRoutes.some((route) => new RegExp(route).test(config.url))) {
+
     const token = await AuthLocalService.getJwt()
     if (token) {
       config.headers.Authorization = `Bearer ${token}`

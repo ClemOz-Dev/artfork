@@ -24,13 +24,5 @@ export default {
       default: [],
     }
   },
-  async beforeMount() {
-    await this.fetchExhibitions()
-  },
-  methods: {
-    async fetchExhibitions() {
-      this.$store.dispatch("exhibitionStore/fetchExhibitions")
-    },
-  },
 }
 </script>

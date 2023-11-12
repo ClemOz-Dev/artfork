@@ -4,6 +4,7 @@ import artworkStore from "./artwork"
 import authStore from "./auth"
 import categoryStore from "./category"
 import exhibitionStore from "./exhibition"
+import galleristStore from "./gallerist"
 import userStore from "./user"
 
 const store = createStore({
@@ -14,6 +15,7 @@ const store = createStore({
     categoryStore,
     exhibitionStore,
     userStore,
+    galleristStore,
   },
 })
 

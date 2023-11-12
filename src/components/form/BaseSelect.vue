@@ -66,8 +66,8 @@ export default {
   },
   methods: {
     onSelectChange(event) {
-      const selectedCategoryId = event.target.value
-      this.$emit("category-selected", selectedCategoryId)
+      const selectedOption = event.target.value
+      this.$emit("option-selected", selectedOption)
     },
   },
 }

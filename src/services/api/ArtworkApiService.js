@@ -90,7 +90,7 @@ class ArtWorkApiService {
         },
       })
       .then((response) => {
-        toast.success("Oeuvre créé avec succès")
+        toast.success("Oeuvre créée avec succès")
         return response
       })
       .catch((e) => {

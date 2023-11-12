@@ -22,7 +22,7 @@ const mutations = {
 }
 
 const actions = {
-  async fetchArtWorks({ commit }, payload = null) {
+  async fetchArtworks({ commit }, payload = null) {
     const artworks = await ArtworkApiService.getArtworks(payload)
     commit("SET_ARTWORKS", artworks.data)
   },
@@ -44,7 +44,7 @@ const actions = {
 
   async addArtwork({ dispatch, commit }, payload) {
     await ArtworkApiService.createArtwork(payload)
-      .then(() => dispatch("fetchArtWorks"))
+      .then(() => dispatch("fetchArtworks"))
       .catch((errors) => {
         commit("SET_FORM_ERRORS", errors)
         throw Error("La création de l'oeuvre a échoué.")
@@ -52,7 +52,7 @@ const actions = {
   },
   async deleteArtworkById({ dispatch }, artworkId) {
     await ArtworkApiService.deleteArtwork(artworkId)
-    await dispatch("fetchArtWorks")
+    await dispatch("fetchArtworks")
   },
 }
 

@@ -1,4 +1,5 @@
 import axiosInstance from "../axios.js"
+import {toast} from "vue3-toastify";
 
 class GalleryApiService {
   /**
@@ -40,12 +41,23 @@ class GalleryApiService {
    * @param payload
    */
   static async createGallery(payload) {
-    console.log({ payload })
+
     return axiosInstance
-      .post("/api/galleries", payload)
-      .then((response) => response)
-      .catch((error) => {
-        throw new Error(error)
+      .post("/api/galleries", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+       .then((response) => {
+        toast.success("Gallerie créée avec succès")
+        return response
+      })
+      .catch((e) => {
+        if (e.status === 422) {
+          throw e.data
+        }
+        const errorMessage = e.data.error ?? "Erreur lors de la création."
+        toast.error(errorMessage)
       })
   }
 

@@ -5,7 +5,7 @@
       @click="closeModal"
     ></div>
     <div
-      class="modal-container bg-white w-1/2 md:max-w-md rounded shadow-lg z-50 overflow-y-auto p-4"
+      class="modal-container bg-white rounded shadow-lg z-50 overflow-y-auto p-4"
     >
       <div class="modal-content text-left">
         <div class="modal-header">
@@ -43,6 +43,10 @@ export default {
   }
 }
 
+.modal-container {
+  max-height: 100%;
+  overflow-y: auto;
+}
 .modal-content {
   .modal-header {
     padding: 12px;
