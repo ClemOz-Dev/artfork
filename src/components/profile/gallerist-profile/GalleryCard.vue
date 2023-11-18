@@ -61,7 +61,7 @@ export default {
     display: flex;
     max-height: 40%;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     background: rgba(255, 255, 255, 0.2 );
     backdrop-filter: blur(9px);
     -webkit-backdrop-filter: blur(9px);

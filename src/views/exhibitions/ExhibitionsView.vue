@@ -66,7 +66,6 @@ export default {
       this.$store.dispatch("exhibitionStore/fetchExhibitions", galerieId)
     },
     async handleSaveExhibition(payload) {
-      console.log("PAY: ", payload)
       try {
         await this.$store.dispatch("exhibitionStore/addExhibition", payload)
         this.showModal = false

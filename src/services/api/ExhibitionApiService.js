@@ -1,4 +1,5 @@
 import axiosInstance from "../axios.js"
+import {toast} from "vue3-toastify";
 
 class ExhibitionApiService {
     /**
@@ -45,8 +46,12 @@ class ExhibitionApiService {
         return axiosInstance
             .post("/api/exhibitions", payload)
             .then((response) => response)
-            .catch(() => {
-                throw new Error("Error fetching artwork by ID")
+            .catch((e) => {
+                if (e.status === 422) {
+                    throw e.data
+                }
+                const errorMessage = e.data.error ?? "Erreur lors de la création."
+                toast.error(errorMessage)
             })
     }
 }

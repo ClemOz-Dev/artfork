@@ -27,6 +27,9 @@
         <li>{{ selectedValue.name }}</li>
       </ul>
     </div>
+    <div style="color: #ef4444; font-style: italic; font-size: 12px" v-if="isOnError">
+      {{ errors[name] }}
+    </div>
   </div>
 </template>
 <script>
@@ -43,6 +46,11 @@ export default {
       type: String,
       default: "name",
     },
+    errors: {
+      type: Object,
+      default: () => {
+      },
+    },
   },
   data() {
     return {
@@ -50,11 +58,17 @@ export default {
     }
   },
   watch: {
-    selectedValues: function(newValues) {
-      console.log(newValues)
+    selectedValues: function (newValues) {
       this.$emit("options-selected", newValues.map(value => value.id));
     },
   },
+  computed: {
+    isOnError() {
+      return this.errors === undefined
+          ? false
+          : this.errors[this.name] !== undefined
+    },
+  }
 }
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>
+<style src="vue-multiselect/dist/vue-multiselect.css" />
